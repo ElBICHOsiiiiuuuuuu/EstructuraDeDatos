@@ -1,0 +1,39 @@
+def leer_numeros_archivo(nombre_archivo):
+    try:
+        with open(nombre_archivo, 'r') as archivo:
+            numeros = [int(linea.strip()) for linea in archivo]
+        return numeros # lee cada linea del archivo elimina espacios en blanco
+    except FileNotFoundError:
+        print(f"Error: El archivo '{nombre_archivo}' no existe.")
+        return [] # si el archivo no existe, se muestra un mensaje de error  y se retoma una lista vacia
+    except ValueError:
+        print("Error: El archivo contiene líneas que no son números enteros válidos.")
+        return [] # si alguna linae del archivo no puede convetir a un niero entero valido se muestra un mensaje de error  y se retorna a una lista vacia
+
+def busqueda_lineal(lista, objetivo):
+    for indice, numero in enumerate(lista): # se uyiliza para r3ecorrer la lista
+        if numero == objetivo:
+            return indice # si se encuentra el valor igula al objeto devuelve el indice
+    return -1 # lo devuleve a -1
+
+# Solicitar el nombre del archivo y leer los números
+nombre_archivo = input("Ingresa el nombre del archivo que contiene los números: ")
+numeros = leer_numeros_archivo(nombre_archivo) #Ulitiliza la funcion leer_numeros_archivos para obtener la lista de numeros
+
+if numeros:
+    # Solicitar el número que se desea buscar
+    try:
+        numero_a_buscar = int(input("Ingresa el número que deseas buscar: "))
+        # Realizar la búsqueda lineal
+        indice = busqueda_lineal(numeros, numero_a_buscar)
+
+        if indice != -1:
+            print(f"El número {numero_a_buscar} se encuentra en el índice {indice}.")
+        else:
+            print(f"El número {numero_a_buscar} no se encuentra en la lista.")
+    except ValueError:
+        print("Error: Por favor, ingresa un número válido.")
+else:
+    print("No se pudo realizar la búsqueda debido a errores en el archivo.") # este utiliza la funcion de busqueda_linael para
+    #buscar el numero en la lista y tambien maneja errores e informa si el numero fue encontrado y si es un numer no validi
+    #muestra un mensaje de error
