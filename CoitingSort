@@ -1,0 +1,35 @@
+def count_sort(input_array):
+	# Finding the maximum element of input_array.
+	M = max(input_array) #lee el valor del array y dtermina el tamaño necesario
+
+	# Initializing count_array with 0
+	count_array = [0] * (M + 1) #se crea el array con m+1 y todos los elementos que inician en cero
+
+
+	# Mapping each element of input_array as an index of count_array
+	for num in input_array:
+		count_array[num] += 1 # este recorre cada numero y utiliza el valor de numero para imcrementar el valor
+
+	# Calculating prefix sum at every index of count_array
+	for i in range(1, M + 1):
+		count_array[i] += count_array[i - 1] # este es bucle determina cuantos elementos son menores o igulaes a un cierto numero
+
+	# Creating output_array from count_array
+	output_array = [0] * len(input_array)
+
+	for i in range(len(input_array) - 1, -1, -1):
+		output_array[count_array[input_array[i]] - 1] = input_array[i]
+		count_array[input_array[i]] -= 1 # este bucle determina y posiciona la posicio correcta
+
+	return output_array # este retorna los elementos en orden acendente
+
+# Driver code
+if _name_ == "_main_":
+	# Input array
+	input_array = [4, 3, 12, 1, 5, 5, 3, 9] # este este es el array que sera ordenado
+
+	# Output array
+	output_array = count_sort(input_array)
+
+	for num in output_array:
+		print(num, end=" ") #y este muestra cada numero que imprime ya ordenado
