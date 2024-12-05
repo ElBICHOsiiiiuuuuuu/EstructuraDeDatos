@@ -1,0 +1,47 @@
+Función para leer números desde un archivo
+def leer_numeros_archivo(nombre_archivo): # La funcion abre el archivo epecificado en modo lectura (´r' )
+    with open(nombre_archivo, 'r') as archivo: # Lee cada línae del archivo, elimina espacios en blanco con stip() y con int() convierte la linea a entero
+        # Convertir cada línea en un número entero
+        numeros = [int(linea.strip()) for linea in archivo]
+    return numeros
+
+# Función para realizar búsqueda binaria
+def busqueda_binaria(lista, objetivo):
+    inicio = 0 # apunta al promer indoce
+    fin = len(lista) - 1 #apunta al ultimo indice de la lista
+    while inicio <= fin:
+        medio = (inicio + fin) // 2
+        if lista[medio] == objetivo:
+            return medio
+        elif lista[medio] < objetivo:
+            inicio = medio + 1
+        else:
+            fin = medio - 1
+    return -1 # Es un bucle mientas inicio sea menor o igual  FIN se repite el proceso
+
+# Cargar la lista de números desde el archivo
+nombre_archivo = input("Ingresa el nombre del archivo con los números: ")
+try:
+    numeros = leer_numeros_archivo(nombre_archivo)
+    numeros.sort()  # Ordenar la lista antes de realizar la búsqueda binaria
+except FileNotFoundError:
+    print(f"El archivo '{nombre_archivo}' no fue encontrado.")
+    exit()
+except ValueError:
+    print("El archivo contiene datos no válidos. Asegúrate de que todos los datos sean números enteros.")
+    exit()
+
+# Solicitar el número que se desea buscar
+try:
+    numero_a_buscar = int(input("Ingresa el número que deseas buscar: "))
+except ValueError:
+    print("Por favor, ingresa un número válido.")
+    exit()
+
+# Realizar la búsqueda binaria
+indice = busqueda_binaria(numeros, numero_a_buscar)
+
+if indice != -1:
+    print(f"El número {numero_a_buscar} se encuentra en el índice {indice}.")
+else:
+    print(f"El número {numero_a_buscar} no se encuentra en la lista.")
